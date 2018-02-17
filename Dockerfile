@@ -13,7 +13,8 @@ RUN sudo -s bash -c 'ln -s /opt/cmake-3.10.2-Linux-x86_64/bin/ctest /usr/bin/cte
 COPY nginx_default /etc/nginx/sites-available/default
 RUN mkdir -p /home/user/.ssh
 # TODO: helpers and apache should really be done in an installer
-ADD helpers.sh /etc/profile.d
+ADD helpers.sh /tmp
+RUN cat /tmp/helpers.sh >> /home/user/.bashrc
 RUN sudo apt-get install -yq apache2 w3c-markup-validator
 # the w3c-markup-validator calls the vnu validator for html5
 RUN sudo sed -i 's/^#HTML5.*$/HTML5 = http\:\/\/vnu\:8888/' /etc/w3c/validator.conf
